@@ -11,6 +11,11 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
+  favorite: {
+    type: Boolean,
+    required: false, 
+    default: false
+  },
   // `link` is required and of type String
   link: {
     type: String,
