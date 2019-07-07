@@ -127,7 +127,7 @@ app.get("/articleNotes/:id", function(req, res) {
 //
 app.post("/newNote",  function(req, res) {
   // Create a new note and pass the req.body to the entry
-  console.log("FUCK ME FUCK ME FUCK ME");
+  
   db.Note.create(req.body).then(function(dbNote) {res.json(dbNote)});
    
 })
