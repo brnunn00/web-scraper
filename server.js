@@ -1,5 +1,5 @@
 var express = require("express");
-var expressHandlebars = require("express-handlebars");
+
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
