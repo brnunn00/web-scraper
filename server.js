@@ -35,7 +35,7 @@ mongoose.connect( MONGODB_URI, { useNewUrlParser: true });
 
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("https://old.reddit.com/r/nba/").then(function(response) {
+  axios.get("https://old.reddit.com/").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
   
@@ -123,7 +123,21 @@ app.get("/articleNotes/:id", function(req, res) {
       res.json(err);
     });
 });
-
+app.put("/addFav/:id", function(req, res) {
+  console.log(req.body.favorite);
+  // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+  db.Article.updateOne({ _id: req.params.id },{$set: {favorite:req.body.favorite}})
+    // ..and populate all of the notes associated with it
+    
+    .then(function(dbArticle) {
+      // If we were able to successfully find an Article with the given id, send it back to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
 //
 app.post("/newNote",  function(req, res) {
   // Create a new note and pass the req.body to the entry
